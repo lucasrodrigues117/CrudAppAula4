@@ -7,18 +7,18 @@
       "email": "rafael@email.com"
     },
     {
-      "firstName": "Lucas ",
-      "lastName": "Rodrigues",
-      "email": "rodrigues.lds.lfr@gmail.comr",
-      "phone": "19982917899",
-      "id": "fZBVL7rUaU4"
-    },
-    {
       "firstName": "Eduardo",
       "lastName": "Rodrigues",
       "email": "eduardo@email",
       "phone": "(12)345678910",
       "id": "_dPxr9itzrc"
+    },
+    {
+      "firstName": "Raphaela ",
+      "lastName": "Meniglim",
+      "email": "raphaela.meniglim@email.com",
+      "phone": "(12)345678910",
+      "id": "pYCmlxiio_U"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
