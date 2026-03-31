@@ -1,58 +1,60 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, FlatList, Button, TextInput, TouchableOpacity} from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, FlatList, TextInput, TouchableOpacity, RefreshControl } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { LinearGradient } from "expo-linear-gradient";
 
 import styles from "../styles/styles";
-
 import { getPeople, deletePerson } from "../servers/peopleCrud";
 
 export default function HomeScreen({ navigation }){
     const [people, setPeople] = useState([]);
     const [allPeople, setAllPeople] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [refreshing, setRefreshing] = useState(false);
 
     async function loadPeople() {
         const data = await getPeople();
-
         setPeople(data);
         setAllPeople(data);
     }
+
+    const onRefresh = useCallback(async () => {
+        setRefreshing(true);
+        await loadPeople();
+        setRefreshing(false);
+    }, []);
 
     const handleSearch = (text) => {
         setSearchText(text);
 
         if (text.trim() === '') {
-        setPeople(allPeople);
-        return;
+            setPeople(allPeople);
+            return;
         }
 
         const filtered = allPeople.filter((item) => {
-        const nomeCompleto = `${item.firstName} ${item.lastName}`.toLowerCase();
-        return nomeCompleto.includes(text.toLowerCase());
+            const nomeCompleto = `${item.firstName} ${item.lastName}`.toLowerCase();
+            return nomeCompleto.includes(text.toLowerCase());
         });
 
         setPeople(filtered);
-  };
+    };
 
     useFocusEffect(
         useCallback(() => {
             setSearchText('');
             loadPeople();
         }, [])
-    )
-/*
-    useEffect(() => {
-        loadPeople();
-    }, []);
-*/
+    );
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Pessoas</Text>
+        <LinearGradient colors={["#1a1a2e", "#16213e", "#0f3460"]} style={styles.container}>
+            <Text style={styles.title}>Cadastro de Pessoas</Text>
 
             <TextInput
                 style={styles.input}
                 placeholder="Pesquisar por nome..."
-                placeholderTextColor="#666"
+                placeholderTextColor="rgba(255,255,255,0.4)"
                 value={searchText}
                 onChangeText={handleSearch}
             />
@@ -66,8 +68,13 @@ export default function HomeScreen({ navigation }){
 
             <FlatList 
                 data={people}
-                keyExtractor={(item) =>item.id.toString()}
-
+                keyExtractor={(item) => item.id.toString()}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
                 renderItem={({item}) => (
                     <CardPersonal 
                         item={item}
@@ -76,7 +83,7 @@ export default function HomeScreen({ navigation }){
                     />
                 )}
             />
-        </View>
+        </LinearGradient>
     );
 }
 
@@ -87,7 +94,6 @@ function CardPersonal({item, navigation, refresh}) {
                 <Text style={styles.name}>
                     {item?.firstName} {item?.lastName}
                 </Text>
-
                 <Text style={styles.email}>
                     {item?.email}
                 </Text>
