@@ -1,0 +1,25 @@
+{
+  "people": [
+    {
+      "id": "1",
+      "firstname": "Rafael",
+      "lastname": "cruz",
+      "email": "rafael@email.com"
+    },
+    {
+      "firstName": "Lucas ",
+      "lastName": "Rodrigues",
+      "email": "rodrigues.lds.lfr@gmail.comr",
+      "phone": "19982917899",
+      "id": "fZBVL7rUaU4"
+    },
+    {
+      "firstName": "Eduardo",
+      "lastName": "Rodrigues",
+      "email": "eduardo@email",
+      "phone": "(12)345678910",
+      "id": "_dPxr9itzrc"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,3 +1,3 @@
-const API_URL = "https://short-bats-send.loca.lt";
+export const API_URL = "http://192.168.0.50:3000";
 
-export default BASE_URL;
+export default API_URL;
